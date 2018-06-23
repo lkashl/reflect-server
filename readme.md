@@ -44,11 +44,11 @@ const ReflectServer = require('reflect-server');
 ### HTTP Server
 
 ``` bash
-reflect-server http localhost 3000
+npm start http localhost 3000
 ```
 
 ### HTTPS Server
 
 ``` bash
-reflect-server http localhost 3000 ./cwd-relative-location-to-cert ./cwd-relative-location-to-key
+npm start http localhost 3000 ./cwd-relative-location-to-cert ./cwd-relative-location-to-key
 ```

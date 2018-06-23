@@ -4,6 +4,7 @@
   "description": "A simple server for reflecting requests back to the client. Useful for unit testing transparent proxies.",
   "main": "index.js",
   "scripts": {
+    "start": "node app",
     "test": "node ./node_modules/jest/bin/jest.js"
   },
   "author": "Kashrian Singh",
