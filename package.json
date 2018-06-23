@@ -1,14 +1,17 @@
 {
   "name": "reflect-server",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A simple server for reflecting requests back to the client. Useful for unit testing transparent proxies.",
   "main": "index.js",
   "scripts": {
     "start": "node app",
     "test": "node ./node_modules/jest/bin/jest.js"
   },
+  "bin": {
+    "reflect-server": "./app.js"
+  },
   "author": "Kashrian Singh",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
@@ -18,5 +21,18 @@
   },
   "dependencies": {
     "killable": "^1.0.0"
+  },
+  "homepage": "https://github.com/lkashl/reflect-server/blob/master/readme.md",
+  "keywords": [
+    "https",
+    "http",
+    "server",
+    "mock",
+    "request",
+    "reflect"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lkashl/reflect-server.git"
   }
 }

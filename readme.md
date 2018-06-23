@@ -41,14 +41,31 @@ const ReflectServer = require('reflect-server');
 
 ## Standalone invokation
 
-### HTTP Server
+### Global invokation
+
+Reflect server can be installed globally and invoked from CLI
 
 ``` bash
-npm start http localhost 3000
+npm i reflect-server -g
 ```
 
-### HTTPS Server
+#### Init HTTP Server
 
 ``` bash
-npm start http localhost 3000 ./cwd-relative-location-to-cert ./cwd-relative-location-to-key
+reflect-server http localhost 3000
+```
+
+#### Init HTTPS Server
+
+``` bash
+reflect-server http localhost 3000 ./cwd-relative-location-to-cert ./cwd-relative-location-to-key
+```
+
+### Local invokation
+
+In case you aren't able to install global modules you can always pull down this module and use npm start
+
+``` bash
+cd reflect-server
+npm start http localhost 3000
 ```
