@@ -3,11 +3,19 @@
 const https = require('https'),
   http = require('http'),
   killable = require('killable'),
-  { log } = require('util');
+  { setLog, log } = require('./util');
 
 const acknowledge = (req) => {
   log('INFO', `Received ${req.method} to ${req.url}`);
 };
+
+const serveInserts = (req, body, res, inserts) => inserts.some((insert) => {
+  if (insert.path.test(req.url)) {
+    insert.callback(req, body, res);
+    return true;
+  }
+  return false;
+});
 
 const reflect = (req, body, res) => {
   res.on('error', (err) => {
@@ -35,19 +43,26 @@ const reflectError = (res, err) => {
   res.end();
 };
 
-const init = (params, options) => new Promise((resolve, reject) => {
+const init = (params, optNJSS, optRS) => new Promise((resolve, reject) => {
   if (!params.port || !params.hostname || !params.serverType) return reject(new Error('Incorrect args provided'));
-  if (!options) options = {};
+
+  if (!optNJSS) optNJSS = {};
+  if (optRS && optRS.silent) setLog(false);
+
   const handler = (req, res) => {
     acknowledge(req);
     let body = '';
     req.on('data', data => body += data);
-    req.on('end', () => reflect(req, body || undefined, res));
+    req.on('end', () => {
+      const insertActive = (optRS && optRS.inserts)
+        ? serveInserts(req, body, res, optRS.inserts) : false;
+      if (!insertActive) reflect(req, body || undefined, res);
+    });
     req.on('error', err => reflectError(res, err));
   };
 
   const server = (params.serverType === 'https')
-    ? https.createServer(options, handler)
+    ? https.createServer(optNJSS, handler)
     : http.createServer(handler);
 
   killable(server);

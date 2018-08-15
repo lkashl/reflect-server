@@ -39,6 +39,29 @@ const ReflectServer = require('reflect-server');
 
 ```
 
+### Additional programmatic invocation options are available in a secret third object:
+
+```javascript
+{
+  // Suppress console output
+  silent: true|false (bool),
+  // Add programmatic inserts allowing for user callbacks
+  // This overrides the default behavior with the user code
+  inserts: [
+    {
+      // A regex path to match the incoming URI
+      path: /\/test/,
+      // Callbak with access to standard res, body and req objs
+      callback(req, body, res) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify({ worked: 'hooray this intercepts' }));
+        res.end();
+      },
+    },
+  ],
+}
+```
+
 ## Standalone invokation
 
 ### Global invokation

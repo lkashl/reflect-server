@@ -4,11 +4,12 @@
   "description": "A simple server for reflecting requests back to the client. Useful for unit testing transparent proxies.",
   "main": "index.js",
   "scripts": {
+    "pretest": "node ./node_modules/eslint/bin/eslint.js .",
     "start": "node app",
     "test": "node ./node_modules/jest/bin/jest.js"
   },
   "bin": {
-    "reflect-server": "./app.js"
+    "reflect-server": "./reflect-server.js"
   },
   "author": "Kashrian Singh",
   "license": "MIT",

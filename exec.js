@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 'use strict';
 
 const fs = require('fs'),
@@ -8,17 +6,15 @@ const fs = require('fs'),
 
 const reflectServer = require('./index');
 
-const [serverType, hostname, port, certLocation, keyLocation] = process.argv.slice(2);
+module.exports = async (serverType, hostname, port, certLocation, keyLocation) => {
+  let key,
+    cert;
 
-let key,
-  cert;
+  if (serverType === 'https') {
+    cert = fs.readFileSync(path.resolve(certLocation));
+    key = fs.readFileSync(path.resolve(keyLocation));
+  }
 
-if (serverType === 'https') {
-  cert = fs.readFileSync(path.resolve(certLocation));
-  key = fs.readFileSync(path.resolve(keyLocation));
-}
-
-(async () => {
   const params = {
     port: port || 3000,
     hostname: hostname || 'localhost',
@@ -33,9 +29,10 @@ if (serverType === 'https') {
   try {
     server = await reflectServer.init(params, options);
     log(`INFO Succesfully bound to ${params.serverType}://${params.hostname}:${params.port}`);
+    return server;
   } catch (err) {
     log(`FATAL ${err.message}`);
     if (server) reflectServer.destroy(server);
-    process.exitCode = 1;
+    throw err;
   }
-})();
+};
