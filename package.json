@@ -1,6 +1,6 @@
 {
   "name": "reflect-server",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "A simple server for reflecting requests back to the client. Useful for unit testing transparent proxies.",
   "main": "index.js",
   "scripts": {
